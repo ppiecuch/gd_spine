@@ -45,4 +45,4 @@ if [ -f $diff ]; then
 	rm $diff
 fi
 
-# rm -rf /tmp/spine-runtimes
+rm -rf /tmp/spine-runtimes
