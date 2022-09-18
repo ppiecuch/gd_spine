@@ -87,7 +87,11 @@ void SpineSkeletonFileResourceFormatLoader::get_recognized_extensions(List<Strin
 }
 
 String SpineSkeletonFileResourceFormatLoader::get_resource_type(const String &path) const {
-	return "SpineSkeletonFileResource";
+	const String el = path.get_extension().to_lower();
+	if (el == "spjson" || el == "spskel") {
+		return "SpineSkeletonFileResource";
+	}
+	return "";
 }
 
 bool SpineSkeletonFileResourceFormatLoader::handles_type(const String &type) const {

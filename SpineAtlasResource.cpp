@@ -240,28 +240,38 @@ RES SpineAtlasResourceFormatLoader::load(const String &path, const String &origi
 	return atlas;
 }
 
+const String atlas_ext("spatlas");
+
 void SpineAtlasResourceFormatLoader::get_recognized_extensions(List<String> *extensions) const {
-	const char atlas_ext[] = "spatlas";
-	if (!extensions->find(atlas_ext))
+	if (!extensions->find(atlas_ext)) {
 		extensions->push_back(atlas_ext);
+	}
 }
 
 String SpineAtlasResourceFormatLoader::get_resource_type(const String &path) const {
-	return "SpineAtlasResource";
+	if (path.get_extension().to_lower() == atlas_ext) {
+		return "SpineAtlasResource";
+	}
+	return "";
 }
 
 bool SpineAtlasResourceFormatLoader::handles_type(const String &type) const {
 	return type == "SpineAtlasResource" || ClassDB::is_parent_class(type, "SpineAtlasResource");
 }
 
+#if VERSION_MAJOR > 3
+Error SpineAtlasResourceFormatSaver::save(const RES &resource, const String &path, uint32_t flags) {
+#else
 Error SpineAtlasResourceFormatSaver::save(const String &path, const RES &resource, uint32_t flags) {
+#endif
 	Ref<SpineAtlasResource> res = resource;
 	return res->save_to_file(path);
 }
 
 void SpineAtlasResourceFormatSaver::get_recognized_extensions(const RES &resource, List<String> *extensions) const {
-	if (Object::cast_to<SpineAtlasResource>(*resource))
-		extensions->push_back("spatlas");
+	if (Object::cast_to<SpineAtlasResource>(*resource)) {
+		extensions->push_back(atlas_ext);
+	}
 }
 
 bool SpineAtlasResourceFormatSaver::recognize(const RES &resource) const {
