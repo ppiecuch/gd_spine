@@ -73,7 +73,7 @@ Error SpineSkeletonFileResource::save_to_file(const String &path) {
 #if VERSION_MAJOR > 3
 RES SpineSkeletonFileResourceFormatLoader::load(const String &path, const String &original_path, Error *error, bool use_sub_threads, float *progress, CacheMode cache_mode) {
 #else
-RES SpineSkeletonFileResourceFormatLoader::load(const String &path, const String &original_path, Error *error) {
+RES SpineSkeletonFileResourceFormatLoader::load(const String &path, const String &original_path, Error *error, bool p_no_subresource_cache) {
 #endif
 	Ref<SpineSkeletonFileResource> skeleton_file = memnew(SpineSkeletonFileResource);
 	skeleton_file->load_from_file(path);
